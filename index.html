@@ -9,6 +9,7 @@
             display: flex;
             height: 100vh;
             margin: 0;
+            font-family: 'Avenir', sans-serif;
         }
         .left-column {
             width: 65%;
@@ -77,10 +78,16 @@
             padding: 8px;
             text-align: left;
         }
+        .created-by {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="left-column">
+        <h1 class="created-by">CREATED BY: ĐÀO LÊ VIỆT HOÀNG (aka HOÀNG ĐÀO)</h1>
 
         <div class="audio-container">
             <div class="audio-sub">
@@ -88,11 +95,10 @@
                 <input type="file" id="audioFiles" accept="audio/*" multiple>
                 <h3>Select Background Music</h3>
                 <input type="file" id="bgMusicFile" accept="audio/*">
-                <br><br>
-                <label for="bgVolume">Background Volume:</label>
-                <input type="range" id="bgVolume" min="0" max="1" step="0.01" value="0.5">
             </div>
             
+            <br></br>
+
             <div class="audio-sub">
                 <h3>Playlist</h3>
                 <table>
