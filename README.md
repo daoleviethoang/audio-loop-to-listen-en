@@ -1,6 +1,6 @@
 # Loop Audio Player
 
-This project is a web-based audio player that allows users to upload and loop audio files, as well as select background music. The interface is designed to be user-friendly and visually appealing, utilizing the ShadCN UI components for a modern look.
+This project is a web-based audio player that allows users to upload and loop audio files, as well as select background music.
 
 ## Features
 
