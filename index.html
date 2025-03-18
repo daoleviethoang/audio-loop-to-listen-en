@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Loop Audio Player</title>
+  <title>IELTS VOCABULARY STU</title>
   <style>
-    /* (CSS giữ nguyên như cũ) */
     body {
       display: flex;
       height: 100vh;
@@ -169,12 +168,10 @@
       playlistTable.innerHTML = '';
       
       const files = Array.from(event.target.files);
-      // Sử dụng Promise.all để chờ tất cả các file được đọc xong
       const promises = files.map((file, index) => {
         return new Promise(resolve => {
           const reader = new FileReader();
           reader.onload = function(e) {
-            // Đảm bảo thứ tự file theo thứ tự người dùng chọn
             audioQueue[index] = e.target.result;
             fileNames[index] = file.name;
             volumeControls[e.target.result] = 1.0;
