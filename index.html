@@ -1,240 +1,329 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loop Audio Player</title>
-    <style>
-        body {
-            display: flex;
-            height: 100vh;
-            margin: 0;
-            font-family: 'Avenir', sans-serif;
-        }
-        .left-column {
-            width: 65%;
-            padding: 20px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-        }
-        .right-column {
-            width: 35%;
-            padding: 20px;
-            border-left: 1px solid #ccc;
-            display: flex;
-            flex-direction: column;
-        }
-        .text-box {
-            flex-grow: 1;
-            border: 1px solid #ccc;
-            padding: 10px;
-            overflow-y: auto;
-            background: white;
-            resize: none;
-            font-size: 16px;
-            height: 100%;
-            white-space: pre-wrap;
-        }
-        .text-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-        }
-        .text-box-sub {
-            width: 50%;
-            height: 500px;
-            border: 1px solid #ccc;
-            padding: 10px;
-            overflow-y: auto;
-            background: white;
-        }
-        .text-box-sub[contenteditable="true"] {
-            outline: none;
-        }
-        .audio-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-        }
-        .audio-sub {
-            width: 50%;
-            height: 250px;
-            padding: 10px;
-            overflow-y: auto;
-            background: white;
-            border: 1px solid #ccc;
-        }
-        audio {
-            width: 100%;
-            margin-top: 10px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 8px;
-            text-align: left;
-        }
-        .created-by {
-            text-align: center;
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loop Audio Player</title>
+  <style>
+    /* (CSS giữ nguyên như cũ) */
+    body {
+      display: flex;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Avenir', sans-serif;
+    }
+    .left-column {
+      width: 65%;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .right-column {
+      width: 35%;
+      padding: 20px;
+      border-left: 1px solid #ccc;
+      display: flex;
+      flex-direction: column;
+    }
+    .text-box {
+      flex-grow: 1;
+      border: 1px solid #ccc;
+      padding: 10px;
+      overflow-y: auto;
+      background: white;
+      resize: none;
+      font-size: 16px;
+      height: 100%;
+      white-space: pre-wrap;
+    }
+    .text-container {
+      display: flex;
+      justify-content: space-between;
+      margin: 0px;
+      padding: 0px;
+    }
+    .text-box-sub {
+      width: 50%;
+      height: 620px;
+      border: 1px solid #ccc;
+      padding: 0px;
+      overflow-y: auto;
+      background: white;
+    }
+    .text-box-sub[contenteditable="true"] {
+      outline: none;
+    }
+    .text-box-essay {
+      width: 100%;
+      height: 100px;
+      border: 1px solid #ccc;
+      overflow-y: auto;
+      background: white;
+      margin: 0px;
+      padding: 0px;
+    }
+    .text-box-essay[contenteditable="true"] {
+      outline: none;
+    }
+    .audio-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+    .audio-sub {
+      width: 50%;
+      padding: 10px;
+      overflow-y: auto;
+      background: white;
+      border: 1px solid #ccc;
+    }
+    audio {
+      width: 100%;
+      margin: 5px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+    .created-by {
+      text-align: center;
+      font-size: 15px;
+      margin: 0px;
+      padding: 0px;
+      color: red;
+    }
+  </style>
 </head>
 <body>
-    <div class="left-column">
-        <h1 class="created-by">CREATED BY: ĐÀO LÊ VIỆT HOÀNG (aka HOÀNG ĐÀO)</h1>
+  <div class="left-column">
+    <h1 class="created-by">CREATED BY: ĐÀO LÊ VIỆT HOÀNG (aka HOÀNG ĐÀO)</h1>
 
-        <div class="audio-container">
-            <div class="audio-sub">
-                <h3>Upload and Loop Audio</h3>
-                <input type="file" id="audioFiles" accept="audio/*" multiple>
-                <h3>Select Background Music</h3>
-                <input type="file" id="bgMusicFile" accept="audio/*">
-            </div>
-            
-            <br></br>
+    <div class="audio-container">
+      <div class="audio-sub">
+        <h3>Upload and Loop Audio</h3>
+        <input type="file" id="audioFiles" accept="audio/*" multiple>
+        <h3>Select Background Music</h3>
+        <input type="file" id="bgMusicFile" accept="audio/*">
+      </div>
+      
+      <br>
 
-            <div class="audio-sub">
-                <h3>Playlist</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th onclick="sortPlaylist()">File Name</th>
-                            <th>Volume</th>
-                        </tr>
-                    </thead>
-                    <tbody id="playlist"></tbody>
-                </table>
-            </div>
-        </div>
-
-        <audio id="audioPlayer" controls></audio>
-        <audio id="bgMusic" loop></audio>
-
-        <div class="text-container">
-            <div class="text-box-sub" contenteditable="true" placeholder="Enter text for the left column..."></div>
-            <div class="text-box-sub" contenteditable="true" placeholder="Enter text for the right column..."></div>
-        </div>
+      <div class="audio-sub">
+        <table>
+          <thead>
+            <tr>
+              <th onclick="sortPlaylist()">File Name</th>
+              <th>Volume</th>
+            </tr>
+          </thead>
+          <tbody id="playlist"></tbody>
+        </table>
+      </div>
     </div>
-    
-    <div class="right-column">
-        <div contenteditable="true" class="text-box" style="font-size: 13px;" placeholder="Enter text here..."></div>
+
+    <audio id="audioPlayer" controls></audio>
+    <audio id="bgMusic" loop></audio>
+
+    <div class="text-box-essay" contenteditable="true" placeholder="Enter text for the essay..."></div>
+    <div class="text-container">
+      <div class="text-box-sub" contenteditable="true" placeholder="Enter text for the EN version"></div>
+      <div class="text-box-sub" contenteditable="true" placeholder="Enter text for the VN version"></div>
     </div>
-    
-    <script>
-        let audioQueue = [];
-        let fileNames = [];
-        let volumeControls = {};
-        let currentIndex = 0;
-        let bgMusicUrl = null;
-        const audioPlayer = document.getElementById('audioPlayer');
-        const bgMusic = document.getElementById('bgMusic');
-        const bgVolume = document.getElementById('bgVolume');
-        const fileInput = document.getElementById('audioFiles');
-        const bgMusicFile = document.getElementById('bgMusicFile');
-        const playlistTable = document.getElementById('playlist');
-        const textBox = document.getElementById('textBox');
-        
-        fileInput.addEventListener('change', function(event) {
-            audioQueue = [];
-            fileNames = [];
-            volumeControls = {};
-            playlistTable.innerHTML = '';
+  </div>
+  
+  <div class="right-column">
+    <div contenteditable="true" class="text-box" style="font-size: 13px;" placeholder="Enter text here..."></div>
+  </div>
+
+  <div style="position: absolute; bottom: 20px; width: 100%; text-align: center;">
+    <button onclick="saveData()">Save Data</button>
+    <button onclick="loadData()">Load Data</button>
+  </div>
+  
+  <script>
+    let audioQueue = [];
+    let fileNames = [];
+    let volumeControls = {};
+    let currentIndex = 0;
+    let bgMusicUrl = null;
+    const audioPlayer = document.getElementById('audioPlayer');
+    const bgMusic = document.getElementById('bgMusic');
+    const fileInput = document.getElementById('audioFiles');
+    const bgMusicFile = document.getElementById('bgMusicFile');
+    const playlistTable = document.getElementById('playlist');
+    const textBoxEssay = document.querySelector('.text-box-essay');
+    const textBoxEN = document.querySelector('.text-box-sub[placeholder="Enter text for the EN version"]');
+    const textBoxVN = document.querySelector('.text-box-sub[placeholder="Enter text for the VN version"]');
+    const textBox = document.querySelector('.text-box');
+
+    fileInput.addEventListener('change', function(event) {
+      audioQueue = [];
+      fileNames = [];
+      volumeControls = {};
+      playlistTable.innerHTML = '';
+      
+      const files = Array.from(event.target.files);
+      // Sử dụng Promise.all để chờ tất cả các file được đọc xong
+      const promises = files.map((file, index) => {
+        return new Promise(resolve => {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            // Đảm bảo thứ tự file theo thứ tự người dùng chọn
+            audioQueue[index] = e.target.result;
+            fileNames[index] = file.name;
+            volumeControls[e.target.result] = 1.0;
             
-            Array.from(event.target.files).forEach((file, index) => {
-                const url = URL.createObjectURL(file);
-                audioQueue.push(url);
-                fileNames.push(file.name);
-                volumeControls[url] = 1.0;
-                
-                const row = document.createElement('tr');
-                row.innerHTML = `<td>${file.name}</td><td><input type='range' min='0' max='1' step='0.01' value='1.0' onchange='updateVolume("${url}", this.value)'></td>`;
-                playlistTable.appendChild(row);
-            });
-            
-            if (bgMusicUrl) {
-                const bgRow = document.createElement('tr');
-                bgRow.innerHTML = `<td>Background Music</td><td><input type='range' min='0' max='1' step='0.01' value='${volumeControls[bgMusicUrl]}' onchange='updateVolume("${bgMusicUrl}", this.value)'></td>`;
-                playlistTable.appendChild(bgRow);
-            }
-            
-            if (audioQueue.length > 0) {
-                currentIndex = 0;
-                playAudio(currentIndex);
-            }
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${file.name}</td><td><input type='range' min='0' max='1' step='0.01' value='1.0' onchange='updateVolume("${e.target.result}", this.value)'></td>`;
+            playlistTable.appendChild(row);
+            resolve();
+          };
+          reader.readAsDataURL(file);
         });
-        
-        bgMusicFile.addEventListener('change', function(event) {
-            if (event.target.files.length > 0) {
-                bgMusicUrl = URL.createObjectURL(event.target.files[0]);
-                bgMusic.src = bgMusicUrl;
-                bgMusic.play();
-                volumeControls[bgMusicUrl] = 0.5;
-                
-                const bgRow = document.createElement('tr');
-                bgRow.innerHTML = `<td>Background Music</td><td><input type='range' min='0' max='1' step='0.01' value='0.5' onchange='updateVolume("${bgMusicUrl}", this.value)'></td>`;
-                playlistTable.appendChild(bgRow);
-            }
-        });
-        
-        bgVolume.addEventListener('input', function() {
-            bgMusic.volume = bgVolume.value;
-        });
-        
-        function playAudio(index) {
-            if (audioQueue.length > 0) {
-                audioPlayer.src = audioQueue[index];
-                audioPlayer.volume = volumeControls[audioQueue[index]];
-                audioPlayer.play();
-            }
+      });
+      
+      Promise.all(promises).then(() => {
+        if (audioQueue.length > 0) {
+          currentIndex = 0;
+          playAudio(currentIndex);
         }
-        
-        audioPlayer.addEventListener('ended', function() {
-            currentIndex++;
-            if (currentIndex >= audioQueue.length) {
-                currentIndex = 0;
-            }
+      });
+    });
+    
+    bgMusicFile.addEventListener('change', function(event) {
+      if (event.target.files.length > 0) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          bgMusicUrl = e.target.result;
+          bgMusic.src = bgMusicUrl;
+          bgMusic.play();
+          volumeControls[bgMusicUrl] = 0.5;
+          
+          const bgRow = document.createElement('tr');
+          bgRow.innerHTML = `<td>Background Music</td><td><input type='range' min='0' max='1' step='0.01' value='0.5' onchange='updateVolume("${bgMusicUrl}", this.value)'></td>`;
+          playlistTable.appendChild(bgRow);
+        };
+        reader.readAsDataURL(event.target.files[0]);
+      }
+    });
+    
+    function playAudio(index) {
+      if (audioQueue.length > 0) {
+        audioPlayer.src = audioQueue[index];
+        audioPlayer.volume = volumeControls[audioQueue[index]];
+        audioPlayer.play();
+      }
+    }
+    
+    audioPlayer.addEventListener('ended', function() {
+      currentIndex++;
+      if (currentIndex >= audioQueue.length) {
+        currentIndex = 0;
+      }
+      playAudio(currentIndex);
+    });
+    
+    function updateVolume(url, value) {
+      volumeControls[url] = parseFloat(value);
+      if (audioPlayer.src === url) {
+        audioPlayer.volume = volumeControls[url];
+      }
+      if (bgMusic.src === url) {
+        bgMusic.volume = volumeControls[url];
+      }
+    }
+    
+    function sortPlaylist() {
+      let combined = audioQueue.map((url, index) => ({ url, name: fileNames[index], volume: volumeControls[url] }));
+      combined.sort((a, b) => a.name.localeCompare(b.name));
+      
+      audioQueue = combined.map(item => item.url);
+      fileNames = combined.map(item => item.name);
+      volumeControls = Object.fromEntries(combined.map(item => [item.url, item.volume]));
+      
+      playlistTable.innerHTML = '';
+      fileNames.forEach((name, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${name}</td><td><input type='range' min='0' max='1' step='0.01' value='${volumeControls[audioQueue[index]]}' onchange='updateVolume("${audioQueue[index]}", this.value)'></td>`;
+        playlistTable.appendChild(row);
+      });
+      
+      if (bgMusicUrl) {
+        const bgRow = document.createElement('tr');
+        bgRow.innerHTML = `<td>Background Music</td><td><input type='range' min='0' max='1' step='0.01' value='${volumeControls[bgMusicUrl]}' onchange='updateVolume("${bgMusicUrl}", this.value)'></td>`;
+        playlistTable.appendChild(bgRow);
+      }
+    }
+
+    function saveData() {
+      const data = {
+        textBoxEssay: textBoxEssay.innerHTML,
+        textBoxEN: textBoxEN.innerHTML,
+        textBoxVN: textBoxVN.innerHTML,
+        textBox: textBox.innerHTML,
+        audioQueue: audioQueue,
+        fileNames: fileNames,
+        volumeControls: volumeControls,
+        currentIndex: currentIndex,
+        bgMusicUrl: bgMusicUrl
+      };
+      const json = JSON.stringify(data);
+      const blob = new Blob([json], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'data.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function loadData() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'application/json';
+      input.onchange = function(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          const data = JSON.parse(event.target.result);
+          textBoxEssay.innerHTML = data.textBoxEssay;
+          textBoxEN.innerHTML = data.textBoxEN;
+          textBoxVN.innerHTML = data.textBoxVN;
+          textBox.innerHTML = data.textBox;
+          audioQueue = data.audioQueue;
+          fileNames = data.fileNames;
+          volumeControls = data.volumeControls;
+          currentIndex = data.currentIndex;
+          bgMusicUrl = data.bgMusicUrl;
+          if (bgMusicUrl) {
+            bgMusic.src = bgMusicUrl;
+            bgMusic.play();
+          }
+          playlistTable.innerHTML = '';
+          audioQueue.forEach((url, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${fileNames[index]}</td><td><input type='range' min='0' max='1' step='0.01' value='${volumeControls[url]}' onchange='updateVolume("${url}", this.value)'></td>`;
+            playlistTable.appendChild(row);
+          });
+          if (bgMusicUrl) {
+            const bgRow = document.createElement('tr');
+            bgRow.innerHTML = `<td>Background Music</td><td><input type='range' min='0' max='1' step='0.01' value='${volumeControls[bgMusicUrl]}' onchange='updateVolume("${bgMusicUrl}", this.value)'></td>`;
+            playlistTable.appendChild(bgRow);
+          }
+          if (audioQueue.length > 0) {
             playAudio(currentIndex);
-        });
-        
-        function updateVolume(url, value) {
-            volumeControls[url] = parseFloat(value);
-            if (audioPlayer.src === url) {
-                audioPlayer.volume = volumeControls[url];
-            }
-            if (bgMusic.src === url) {
-                bgMusic.volume = volumeControls[url];
-            }
-        }
-        
-        function sortPlaylist() {
-            let combined = audioQueue.map((url, index) => ({ url, name: fileNames[index], volume: volumeControls[url] }));
-            combined.sort((a, b) => a.name.localeCompare(b.name));
-            
-            audioQueue = combined.map(item => item.url);
-            fileNames = combined.map(item => item.name);
-            volumeControls = Object.fromEntries(combined.map(item => [item.url, item.volume]));
-            
-            playlistTable.innerHTML = '';
-            fileNames.forEach((name, index) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `<td>${name}</td><td><input type='range' min='0' max='1' step='0.01' value='${volumeControls[audioQueue[index]]}' onchange='updateVolume("${audioQueue[index]}", this.value)'></td>`;
-                playlistTable.appendChild(row);
-            });
-            
-            if (bgMusicUrl) {
-                const bgRow = document.createElement('tr');
-                bgRow.innerHTML = `<td>Background Music</td><td><input type='range' min='0' max='1' step='0.01' value='${volumeControls[bgMusicUrl]}' onchange='updateVolume("${bgMusicUrl}", this.value)'></td>`;
-                playlistTable.appendChild(bgRow);
-            }
-        }
-    
-    </script>
-    
+          }
+        };
+        reader.readAsText(file);
+      };
+      input.click();
+    }
+  </script>
 </body>
 </html>
