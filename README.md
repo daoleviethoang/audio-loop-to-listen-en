@@ -12,4 +12,6 @@ This project is a web-based audio player that allows users to upload and loop au
 ## Getting Started
 
 Web link: https://daoleviethoang.github.io/audio-loop-to-listen-en/
-![Uploading image.png…]()
+
+
+![image](https://github.com/user-attachments/assets/a1b8c72d-8775-4ca7-873e-7c456b7167b3)
